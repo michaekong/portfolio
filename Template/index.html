@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="header">
+        <img src="path/to/your/logo.png" alt="Logo Université" class="logo">
+        <div class="header-title">Visualisation des Mémoires</div>
+    </div>
+
+    <div class="filter-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Rechercher par titre, auteur ou mots-clés...">
+        <select id="anneeFilter">
+            <option value="">Année</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+            <option value="2021">2021</option>
+        </select>
+        <select id="domaineFilter">
+            <option value="">Domaine</option>
+            <option value="informatique">Informatique</option>
+            <option value="business">Business</option>
+            <option value="sciences">Sciences</option>
+            <option value="droit">Droit</option>
+        </select>
+        <select id="encadreurFilter">
+            <option value="">Encadreur</option>
+            <option value="Dr. Martin">Dr. Martin</option>
+            <option value="Prof. Dubois">Prof. Dubois</option>
+            <option value="Mme. Lefevre">Mme. Lefevre</option>
+        </select>
+        <button onclick="filtrerMemoires()">Filtrer</button>
+        <button onclick="resetFilters()">Réinitialiser</button>
+    </div>
+
+    <div class="memoires-list" id="memoiresList"></div>
+
+    <!-- Modal pour afficher les résumés -->
+    <div class="modal" id="resumeModal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Résumé</h3>
+            <p id="modalContent"></p>
+            <button class="close-btn" onclick="fermerModal()">Fermer</button>
+        </div>
+    </div>
+
+    <script>
+        // Données exemple
+        const memoires = [
+            {
+                id: 1,
+                titre: "Intelligence Artificielle",
+                auteur: "Sophie Martin",
+                annee: "2024",
+                domaine: "informatique",
+                encadreur: "Dr. Martin",
+                resume: "Ce mémoire explore les applications de l'IA dans divers secteurs.",
+                url: "path/to/memoire1.pdf",
+                imageUrl: "path/to/book1.jpg"
+            },
+            {
+                id: 2,
+                titre: "Impact du COVID-19",
+                auteur: "Thomas Dubois",
+                annee: "2023",
+                domaine: "business",
+                encadreur: "Prof. Dubois",
+                resume: "L'impact du COVID-19 sur le commerce en ligne a été majeur.",
+                url: "path/to/memo ire2.pdf",
+                imageUrl: "path/to/book2.jpg"
+            },
+            {
+                id: 3,
+                titre: "Machine Learning et ses Applications",
+                auteur: "Alice Dupont",
+                annee: "2024",
+                domaine: "informatique",
+                encadreur: "Dr. Martin",
+                resume: "Ce mémoire discute des techniques de machine learning et de leurs applications dans l'industrie.",
+                url: "path/to/memoire3.pdf",
+                imageUrl: "path/to/book3.jpg"
+            },
+            {
+                id: 4,
+                titre: "Économie Circulaire",
+                auteur: "Jean-Pierre Lefevre",
+                annee: "2023",
+                domaine: "sciences",
+                encadreur: "Mme. Lefevre",
+                resume: "Analyse des modèles d'économie circulaire et leur impact sur l'environnement.",
+                url: "path/to/memoire4.pdf",
+                imageUrl: "path/to/book4.jpg"
+            },
+            {
+                id: 5,
+                titre: "Droit et Technologie",
+                auteur: "Marie Curie",
+                annee: "2022",
+                domaine: "droit",
+                encadreur: "Prof. Dubois",
+                resume: "Ce mémoire examine les implications juridiques des nouvelles technologies.",
+                url: "path/to/memoire5.pdf",
+                imageUrl: "path/to/book5.jpg"
+            },
+            {
+                id: 6,
+                titre: "Stratégies de Marketing Digital",
+                auteur: "Paul Martin",
+                annee: "2021",
+                domaine: "business",
+                encadreur: "Dr. Martin",
+                resume: "Étude des stratégies de marketing digital et leur efficacité.",
+                url: "path/to/memoire6.pdf",
+                imageUrl: "path/to/book6.jpg"
+            }
+        ];
+
+        // Affichage des mémoires
+        function afficherMemoires(memoires) {
+            const container = document.getElementById('memoiresList');
+            container.innerHTML = '';
+
+            memoires.forEach(memoire => {
+                const card = document.createElement('div');
+                card.className = 'memoire-card';
+                card.innerHTML = `
+                    <img src="${memoire.imageUrl}" alt="${memoire.titre}" class="memoire-img">
+                    <div class="memoire-info">
+                        <div class="memoire-title">${memoire.titre}</div>
+                        <div class="memoire-details">Auteur: ${memoire.auteur}</div>
+                        <div class="memoire-details">Année: ${memoire.annee}</div>
+                        <div class="memoire-details">Domaine: ${memoire.domaine}</div>
+                        <div class="memoire-details">Encadreur: ${memoire.encadreur}</div>
+                        <button class="voir-plus-btn" onclick="ouvrirModal('${memoire.titre}', '${memoire.resume}')">Voir plus</button>
+                        <a href="${memoire.url}" class="download-btn" target="_blank">Télécharger</a>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Fonction pour filtrer les mémoires
+        function filtrerMemoires() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const anneeFilter = document.getElementById('anneeFilter').value;
+            const domaineFilter = document.getElementById('domaineFilter').value;
+            const encadreurFilter = document.getElementById('encadreurFilter').value;
+
+            const memoiresFiltres = memoires.filter(memoire => {
+                const matchSearch = memoire.titre.toLowerCase().includes(searchTerm) ||
+                                    memoire.auteur.toLowerCase().includes(searchTerm) ||
+                                    memoire.resume.toLowerCase().includes(searchTerm);
+                const matchAnnee = !anneeFilter || memoire.annee === anneeFilter;
+                const matchDomaine = !domaineFilter || memoire.domaine === domaineFilter;
+                const matchEncadreur = !encadreurFilter || memoire.encadreur === encadreurFilter;
+
+                return matchSearch && matchAnnee && matchDomaine && matchEncadreur;
+            });
+
+            afficherMemoires(memoiresFiltres);
+        }
+
+        // Fonction pour réinitialiser les filtres
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('anneeFilter').value = '';
+            document.getElementById('domaineFilter').value = '';
+            document.getElementById('encadreurFilter').value = '';
+            afficherMemoires(memoires);
+        }
+
+        // Fonction pour ouvrir le modal
+        function ouvrirModal(titre, resume) {
+            document.getElementById('modalTitle').textContent = titre;
+            document.getElementById('modalContent').textContent = resume;
+            document.getElementById('resumeModal').style.display = 'flex';
+        }
+
+        // Fonction pour fermer le modal
+        function fermerModal() {
+            document.getElementById('resumeModal').style.display = 'none';
+        }
+
+        // Initialisation
+        afficherMemoires(memoires);
+    </script>
+{% endblock content %}

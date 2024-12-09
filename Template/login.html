@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Université</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Variables de couleurs */
+        :root {
+            --bg-primary: #002f6c;
+            --bg-secondary: #0a2857;
+            --text-primary: #ffffff;
+            --btn-primary: #007bff;
+            --btn-hover: #0056b3;
+            --link-color: #d1d1d1;
+            --link-hover: #ffffff;
+        }
+
+        /* Styles généraux */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container de connexion */
+        .login-container {
+            background-color: var(--bg-secondary);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        .login-title {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #001c42;
+            color: var(--text-primary);
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: var(--btn-primary);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--btn-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        .login-button:hover {
+            background-color: var(--btn-hover);
+        }
+
+        .register-link {
+            margin-top: 15px;
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .register-link:hover {
+            color: var(--link-hover);
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px;
+            }
+
+            .login-title {
+                font-size: 1.3em;
+            }
+
+            .input-field {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            .login-button {
+                padding: 10px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-title">Connexion</div>
+        <input type="text" class="input-field" placeholder="Nom d'utilisateur" required>
+        <input type="password" class="input-field" placeholder="Mot de passe" required>
+        <button class="login-button">Se connecter</button>
+        <div>
+            <a href="{% url 'register' %}" class="register-link">Créer un compte</a>
+        </div>
+    </div>
+</body>
+</html>
