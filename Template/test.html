@@ -1,0 +1,19 @@
+<!-- Formulaire d'édition -->
+<div id="imgForm{{ Realisation.pk }}" class="infobulle">
+    <h2>ajouter un img a cette  realisation: {{ Realisation.titre }}</h2>
+    <form method="POST" action="{% url 'img_realisation' Realisation.pk %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="nom">nom</label>
+        <input type="text" name="nom" required>
+
+       
+
+        <label for="imgvalue">valeur du lien</label>
+        <input type="text" name="imgvalue" required>
+
+    
+
+        <button type="submit">Sauvegarder</button>
+        <button type="button" onclick="closeModal({{ Realisation.pk }})">Annuler</button>
+    </form>
+</div>

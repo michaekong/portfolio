@@ -1,0 +1,273 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>Liste des SKILLS</title>
+    <style>
+        /* Reset de base */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: #f3f3f3;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin: 40px 0;
+            color: #c70039;
+        }
+
+        .color {
+            color: #c70039;
+        }
+
+        /* Liste des SKILLS */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1200px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        a {
+            color: #f3f3f3;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #c70039;
+        }
+
+        button {
+            padding: 8px 18px;
+            background-color: #c70039;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #9b0030;
+        }
+
+        /* Formulaires et infobulles */
+        .infobulle {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #222;
+            border-radius: 12px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            z-index: 100;
+            width: 400px;
+            max-width: 90%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .infobulle input,
+        .infobulle select,
+        .infobulle textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+            color: #f3f3f3;
+            font-size: 16px;
+        }
+
+        .infobulle input:focus,
+        .infobulle select:focus,
+        .infobulle textarea:focus {
+            background-color: #444;
+            border-color: #c70039;
+        }
+
+        /* Styles de l'input de recherche */
+        #searchInput {
+            padding: 12px;
+            margin: 20px auto;
+            display: block;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+            color: #f3f3f3;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        function showEditForm(skillsId) {
+            var form = document.getElementById('editForm' + skillsId);
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+
+        function showDeleteForm(skillsId) {
+            var form = document.getElementById('deleteForm' + skillsId);
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+
+        function showAddskillsForm() {
+            var form = document.getElementById('addskillsForm');
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+
+        function closeModal(skillsId = null) {
+            var editForm = document.getElementById('editForm' + skillsId);
+            var deleteForm = document.getElementById('deleteForm' + skillsId);
+            var addForm = document.getElementById('addskillsForm');
+
+            if (editForm) editForm.style.display = 'none';
+            if (deleteForm) deleteForm.style.display = 'none';
+            if (addForm) addForm.style.display = 'none';
+        }
+
+        function searchskills() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const skillsItems = document.querySelectorAll('li');
+
+            skillsItems.forEach(item => {
+                const title = item.querySelector('a').textContent.toLowerCase();
+                item.style.display = title.includes(searchQuery) ? '' : 'none';
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <h1><span class="color">Liste</span> des SKILLS</h1>
+
+    <!-- Bouton Ajouter un skills -->
+    <button  onclick="showAddskillsForm()">Ajouter un skills</button>
+
+    <input type="text" id="searchInput" placeholder="Rechercher un skills..." onkeyup="searchskills()">
+
+    <ul>
+        {% for skills in user.skills_list %}
+            <li>
+                <div>
+                    <a href="">{{ skills.nom }}</a> 
+                </div>
+                <div class="html-prog wow prog">
+                    <div class="html-progress" style="width: {{ skills.skillsvalue }}%;">
+                        {{ skills.skillsvalue }}%
+                    </div>
+                </div>
+                
+              
+                <div>
+                    <button onclick="showEditForm({{ skills.pk }})">Modifier</button>
+                    <button onclick="showDeleteForm({{ skills.pk }})">Supprimer</button>
+                </div>
+
+                <!-- Formulaire d'édition -->
+                <div id="editForm{{ skills.pk }}" class="infobulle">
+                    <h2>Modifier le skills: {{ skills.nom }}</h2>
+                    <form method="POST" action="{% url 'edit_skills' skills.pk %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" value="{{ skills.nom }}" required>
+
+                        <label for="skillsvalue">valeur en  %</label>
+                    
+                        <input type="text"  name="skillsvalue" value="{{ skills.skillsvalue}}" required>
+
+                        
+
+
+                        
+
+                        <label for="image">Image</label>
+                        <input type="file" name="image" value="{{ skills.img }}" accept="image/*">
+
+                        <button type="submit">Sauvegarder</button>
+                        <button type="button" onclick="closeModal({{ skills.pk }})">Annuler</button>
+                    </form>
+                </div>
+
+                <!-- Formulaire de suppression -->
+                <div id="deleteForm{{ skills.pk }}" class="infobulle">
+                    <h2>Supprimer le skills</h2>
+                    <p>Êtes-vous sûr de vouloir supprimer ce skills ?</p>
+                    <form method="POST" action="{% url 'delete_skills' skills.pk %}">
+                        {% csrf_token %}
+                        <button type="submit">Supprimer</button>
+                    </form>
+                    <button type="button" onclick="closeModal({{ skills.pk }})">Annuler</button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Formulaire d'ajout de skills -->
+    <div id="addskillsForm" class="infobulle">
+        <h2>Ajouter un Nouveau skills</h2>
+        <form method="POST" action="{% url 'add_skills' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="nom">Nom</label>
+                        <input type="text" name="nom" required>
+
+                        <label for="skillsvalue">valeur en  %</label>
+                        <textarea name="skillsvalue" required>{{ skills.skillsvalue }}</textarea>
+
+                        
+
+                        <label for="image">Image</label>
+                        <input type="file" name="image" accept="image/*">
+
+            <button type="submit">Ajouter</button>
+            <button type="button" onclick="closeModal()">Annuler</button>
+        </form>
+    </div>
+
+</body>
+</html>

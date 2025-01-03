@@ -1,0 +1,22 @@
+{% extends 'base_generic.html' %}
+
+{% block content %}
+    <h1>User Profiles</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Actions</th>
+        </tr>
+        {% for profile in object_list %}
+            <tr>
+                <td>{{ profile.nom }} {{ profile.prenom }}</td>
+                <td>{{ profile.type }}</td>
+                <td>
+                    <a href="{% url 'admin_dashboard:userprofile_update' profile.pk %}">Edit</a>
+                    <a href="{% url 'admin_dashboard:userprofile_delete' profile.pk %}">Delete</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,276 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>Liste des link</title>
+    <style>
+        /* Reset de base */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: #f3f3f3;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin: 40px 0;
+            color: #c70039;
+        }
+
+        .color {
+            color: #c70039;
+        }
+
+        /* Liste des link */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1200px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        a {
+            color: #f3f3f3;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #c70039;
+        }
+
+        button {
+            padding: 8px 18px;
+            background-color: #c70039;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #9b0030;
+        }
+
+        /* Formulaires et infobulles */
+        .infobulle {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #222;
+            border-radius: 12px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            z-index: 100;
+            width: 400px;
+            max-width: 90%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .infobulle input,
+        .infobulle select,
+        .infobulle textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+            color: #f3f3f3;
+            font-size: 16px;
+        }
+
+        .infobulle input:focus,
+        .infobulle select:focus,
+        .infobulle textarea:focus {
+            background-color: #444;
+            border-color: #c70039;
+        }
+
+        /* Styles de l'input de recherche */
+        #searchInput {
+            padding: 12px;
+            margin: 20px auto;
+            display: block;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+            color: #f3f3f3;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        function showEditForm(linkId) {
+            var form = document.getElementById('editForm' + linkId);
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+
+        function showDeleteForm(linkId) {
+            var form = document.getElementById('deleteForm' + linkId);
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+
+        function showAddlinkForm() {
+            var form = document.getElementById('addlinkForm');
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+
+        function closeModal(linkId = null) {
+            var editForm = document.getElementById('editForm' + linkId);
+            var deleteForm = document.getElementById('deleteForm' + linkId);
+            var addForm = document.getElementById('addlinkForm');
+
+            if (editForm) editForm.style.display = 'none';
+            if (deleteForm) deleteForm.style.display = 'none';
+            if (addForm) addForm.style.display = 'none';
+        }
+
+        function searchlink() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const linkItems = document.querySelectorAll('li');
+
+            linkItems.forEach(item => {
+                const title = item.querySelector('a').textContent.toLowerCase();
+                item.style.display = title.includes(searchQuery) ? '' : 'none';
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <h1><span class="color">Liste</span> des link</h1>
+
+    <!-- Bouton Ajouter un link -->
+    <button  onclick="showAddlinkForm()">Ajouter un link</button>
+
+    <input type="text" id="searchInput" placeholder="Rechercher un link..." onkeyup="searchlink()">
+
+    <ul>
+        {% for link in user.link_list %}
+            <li>
+                <div>
+                    <a href="">{{ link.nom }}</a> 
+                </div>
+                <div>
+                    <a href="{{ link.linkvalue }}">{{ link.linkvalue }}</a> 
+                </div>
+               
+                        
+                   
+                
+                
+              
+                <div>
+                    <button onclick="showEditForm({{ link.pk }})">Modifier</button>
+                    <button onclick="showDeleteForm({{ link.pk }})">Supprimer</button>
+                </div>
+
+                <!-- Formulaire d'édition -->
+                <div id="editForm{{ link.pk }}" class="infobulle">
+                    <h2>Modifier le link: {{ link.nom }}</h2>
+                    <form method="POST" action="{% url 'edit_link' link.pk %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" value="{{ link.nom }}" required>
+
+                        <label for="linkvalue">veiller entrer un lien fonctionnel</label>
+                    
+                        <input  type="text"   name="linkvalue" value="{{ link.linkvalue}}" required>
+
+                        
+
+
+                        
+
+                        <label for="image">Image</label>
+                        <input type="file" name="image" value="{{ link.img }}" accept="image/*" required>
+
+                        <button type="submit">Sauvegarder</button>
+                        <button type="button" onclick="closeModal({{ link.pk }})">Annuler</button>
+                    </form>
+                </div>
+
+                <!-- Formulaire de suppression -->
+                <div id="deleteForm{{ link.pk }}" class="infobulle">
+                    <h2>Supprimer le link</h2>
+                    <p>Êtes-vous sûr de vouloir supprimer ce link ?</p>
+                    <form method="POST" action="{% url 'delete_link' link.pk %}">
+                        {% csrf_token %}
+                        <button type="submit">Supprimer</button>
+                    </form>
+                    <button type="button" onclick="closeModal({{ link.pk }})">Annuler</button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Formulaire d'ajout de link -->
+    <div id="addlinkForm" class="infobulle">
+        <h2>Ajouter un Nouveau link</h2>
+        <form method="POST" action="{% url 'add_link' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="nom">Nom</label>
+                        <input type="text" name="nom" required>
+
+                        <label for="linkvalue">veiller entrer un lien fonctionnel</label>
+                    
+                        <input  type="text"   name="linkvalue" value="{{ link.linkvalue}}" required>
+
+                        
+
+                        <label for="image">Image</label>
+                        <input type="file" name="image" accept="image/*" required>
+
+            <button type="submit">Ajouter</button>
+            <button type="button" onclick="closeModal()">Annuler</button>
+        </form>
+    </div>
+
+</body>
+</html>

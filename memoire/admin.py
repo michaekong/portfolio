@@ -1,40 +1,58 @@
 from django.contrib import admin
 from .models import *
-
-
+@admin.register(UserProfile)
 class UserProfileAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'prenom', 'type', 'sexe')
+    list_filter = ('type', 'sexe')
+    search_fields = ('nom', 'prenom', 'email')
+@admin.register(Realisation)
+class RealisationAdmin(admin.ModelAdmin):
+    list_display = ('titre', 'datet' )
+    list_filter = ('datet', 'titre')
+    search_fields = ('titre', 'resume', 'userealisation')    
+@admin.register(Realisationimages)
+class RealisationimagesAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'realimg')
+    list_filter = ('nom', 'realimg')
+    search_fields = ('nom', 'realimg')
+@admin.register(Realisationlinks)
+class RealisationlinksAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'realink')
+    list_filter = ('nom', 'realink')
+    search_fields = ('nom', 'realink')
 
-    list_display = ('prenom', 'nom', 'email', 'type')
+@admin.register(Userservice)
+class UserserviceAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'servicevalue')
+    list_filter = ('nom', 'servicevalue')
+    search_fields = ('nom', 'servicevalue')
+@admin.register(Userlink)
+class UserlinkAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'linkvalue')
+    list_filter = ('nom', 'linkvalue')
+    search_fields = ('nom', 'linkvalue')
+@admin.register(Userskills)
+class UserskillsAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'skillsvalue')
+    list_filter = ('nom', 'skillsvalue')
+    search_fields = ('nom', 'skillsvalue')
 
-    search_fields = ('prenom', 'nom', 'email')
-
-    list_filter = ('type',)
-
-
-class MemoireAdmin(admin.ModelAdmin):
-
-    list_display = ('titre', 'domaine', 'annee_publication', 'auteur')
-
-    search_fields = ('titre', 'domaine', 'auteur__prenom', 'auteur__nom')
-
-    list_filter = ('domaine', 'annee_publication', 'auteur')
-
-
-class EncadrementAdmin(admin.ModelAdmin):
-
-    list_display = ('memoire', 'encadrant')
-
-    search_fields = ('memoire__titre', 'encadrant__prenom', 'encadrant__nom')
-
-    list_filter = ('memoire', 'encadrant')
+@admin.register(Domaine)
+class DomaineAdmin(admin.ModelAdmin):
+    list_display = ('nom',)
+    search_fields = ('nom',)
 
 
-# Enregistrement des modèles dans l'admin
 
-admin.site.register(UserProfile, UserProfileAdmin)
+@admin.register(Blog)
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('titre', 'datet')
+    list_filter = ('titre', 'datet')
+    search_fields = ('titre', 'resume')
+   
 
-admin.site.register(Memoire, MemoireAdmin)
-
-admin.site.register(Encadrement, EncadrementAdmin)
-
-# Register your models here.
+@admin.register(UnverifiedUserProfile)
+class UnverifiedUserProfileAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'prenom', 'email', 'created_at', 'verification_code')
+    search_fields = ('nom', 'prenom', 'email')
+    list_filter = ('created_at',)

@@ -1,0 +1,150 @@
+<!--about-->
+{% load static %}
+<div id="about">
+    <div class="color-changer">
+    <div class="color-panel">
+        <img  src="{% static 'images/gear.png' %}" alt="">
+    </div>
+    <div class="color-selector">
+        <div class="heading">Custom Colors</div>
+        <div class="colors">
+            <ul >
+            <li>
+                <a href="#0" class="color-red " title="color-red"></a>
+            </li>
+            <li>
+                <a href="#0" class="color-purple" title="color-purple"></a>
+            </li>
+            <li>
+                <a href="#0" class="color-malt" title="color-malt"></a>
+            </li>
+            <li>
+                <a href="#0" class="color-green" title="color-green"></a>
+            </li>
+            <li>
+                <a href="#0" class="color-blue" title="color-blue"></a>
+            </li>
+            <li>
+                <a href="#0" class="color-orange" title="color-orange"></a>
+            </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    <!--about content-->
+    <div id="about-content">
+    
+        <div class="about-header">
+            About <span class="color">Me</span>
+            <span class ="header-caption">Get to Know <span class="color"> me.</span></span>
+        </div>
+        <div class="about-main">
+    <div class="about-first-paragraph wow">
+    <!--about description-->
+       <span class="about-first-line">
+            I'm creative 
+            <span class="color">web developer</span>
+             based in {{ user.ville }} , {{ user.pays }} </span>
+             <br>
+       <span class="about-second-line">{{ user.description }}</span>
+       <div class="cv">
+        <a href="{{ user.cv.url }}" download>
+            <button>Télécharger <span class="colors">CV</span></button>
+        </a>
+    </div>
+    </div>
+    <!--about picture-->
+    <div class="about-img">
+        <img src="{{ user.photo_profil.url }}"alt="Your Image">
+    </div>
+    </div>
+
+    </div>
+    <!--services start-->
+    <div id="services">
+        <div class="color-changer">
+            <div class="color-panel">
+                <img  src="{% static 'images/gear.png' %}" alt="">
+            </div>
+            <div class="color-selector">
+                <div class="heading">Custom Colors</div>
+                <div class="colors">
+                    <ul >
+                    <li>
+                        <a href="#0" class="color-red " title="color-red"></a>
+                    </li>
+                    <li>
+                        <a href="#0" class="color-purple" title="color-purple"></a>
+                    </li>
+                    <li>
+                        <a href="#0" class="color-malt" title="color-malt"></a>
+                    </li>
+                    <li>
+                        <a href="#0" class="color-green" title="color-green"></a>
+                    </li>
+                    <li>
+                        <a href="#0" class="color-blue" title="color-blue"></a>
+                    </li>
+                    <li>
+                        <a href="#0" class="color-orange" title="color-orange"></a>
+                    </li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+    <!--services header-->
+            <div class="services-heading wow">
+                <span class="color">My</span> Services
+            </div>
+    <!--services header end-->
+    <!--services content-->
+   
+    <div class="services-content">
+        {% for serv  in user.service_list  %}
+        <div class="service-one service wow">
+            <div class="service-img">
+                <img src="{{serv.img.url}}" alt="service-one">
+            </div>
+            <div class="service-description">
+                <h2>{{ serv.nom }}</h2>
+                <p>{{serv.servicevalue  }}</p>
+            </div>
+        </div>
+        {% endfor %}
+        
+        
+        
+       
+    
+ </div>
+</div>
+    <!--services content end-->
+    <!--services end-->
+    <div id="skills">
+        <div class="skills-header">
+             My <span class="color"> Skills</span>
+        </div>
+        <div class="skills-content">
+            {% for skills in user.skills_list %}
+                <div class="skill-html skill">
+        
+                    <div class="skill-text">
+                        <div class="html">
+                            {{ skills.nom }}
+                        </div>
+                    </div>
+        
+                    <div class="html-prog wow prog">
+                        <div class="html-progress" style="width: {{ skills.skillsvalue }}%;">
+                            {{ skills.skillsvalue }}%
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+<!--copyright-section You Can Remove After Downloading-->
+
+<!--copyright-section-->
+</div>
+<!--about end-->

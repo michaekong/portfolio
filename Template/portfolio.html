@@ -1,0 +1,50 @@
+{% load static %}
+  
+
+
+    <div id="portfolio">
+        <div class="portfolio-header"> 
+            <h1><span class="color">My</span> Portfolio</h1>
+            <p>Some of My <span class="color">Works</span></p>
+        </div>
+        <div id="portfolio-content">
+        
+                {% for portfolio in user.realisation_list %}
+                <div class="portfolio">
+                    <div class="portfolio-image">
+                        <img src="{{ portfolio.images.url }}" alt="portfolio">
+                    </div>
+                    <div class="portfolio-text">
+                        <h2>{{ portfolio.titre }}</h2>
+                        <p>{{ portfolio.resume }}</p>
+                        <div class="button">
+                            <button onclick="openModal('{{ portfolio.titre|escapejs }}', '{{ portfolio.resume|escapejs }}', '{{ portfolio.resumer_detailler|escapejs }}', '{{ portfolio.images.url|escapejs }}', [{% for img in portfolio.realimg.all %}'{{ img.images.url|escapejs }}', {% empty %} '' {% endfor %}], [{% for link in portfolio.realink.all %} {'nom': '{{ link.nom|escapejs }}', 'linkvalue': '{{ link.linkvalue|escapejs }}'}, {% empty %} '' {% endfor %}])">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+          
+             <!-- Modal -->
+        <div id="detailModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 id="modal-title"></h2>
+                <p id="modal-detailed-summary"></p>
+                <div id="modal-links"></div>
+       
+               
+                <div id="modal-images"></div>
+                
+            </div>
+        </div>
+
+        </div>
+    </div>
+
+       
+
+
+   
+

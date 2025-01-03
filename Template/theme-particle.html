@@ -1,0 +1,300 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Willy Wonkas - Personal Portfolio Website Template" />
+        <meta name="keywords" content="blog, business card, creative, creative portfolio, cv theme, online resume, personal, portfolio, professional cv, responsive portfolio, resume, resume theme, vcard" />
+        <meta name="author" content="willy wonka" />
+        <title>Willy Wonkas - Personal Portfolio Website Template</title>
+      <!--favicon-img--> 
+       <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+       <!--favicon-img-->
+       <!--main css file should not be removed -->
+     
+<link rel="stylesheet" href="{% static 'css/color-purple.css' %}">
+       <link rel="stylesheet" href="{% static 'css/color-red.css' %}">
+       <link rel="stylesheet" href="{% static 'css/index.css' %}">
+       <style>
+        .img-black-white {
+            filter: grayscale(100%);
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            transition: filter 0.3s ease;
+        }
+        
+        .img-black-white:hover {
+            filter: grayscale(0%);
+        }
+        
+    </style>
+    <style>
+        /* Styles de base */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f3f3f3;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+     
+
+    
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 10;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);  /* Fond noir avec une opacité */
+            overflow: auto;
+        }
+        
+        .modal-content {
+            background-color: #000;  /* Fond du modal noir */
+            color: #c70039;  /* Couleur du texte en rouge (#c70039) */
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal h2 {
+            color: #c70039;  /* Titre en rouge (#c70039) */
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .modal p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #ffffff; 
+        }
+        
+        #modal-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        
+        #modal-images img {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        #modal-images img:hover {
+            transform: scale(1.05);
+        }
+        
+        #modal-links a {
+            color: #c70039;  /* Liens en rouge (#c70039) */
+            font-weight: bold;
+            text-decoration: none;
+        }
+        
+        #modal-links a:hover {
+            text-decoration: underline;
+        }
+        
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+    </style>
+        <!--main css file-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
+    </head>
+<body>
+    <!--contains all the div-->
+    <div id="all">
+    <!--mouse  follower-->
+        <div class="cursor"></div>
+    <!--mouse  follower-->
+    <!--loader-->
+        <div id="loader">
+            <span class="color">{{ user.prenom }}</span>{{ user.nom }} 
+        </div>
+    <!--loader-end-->
+    <!--link-screen-->
+        <div id="breaker">
+        </div>
+        <div id="breaker-two">
+        </div>
+    <!--link-screen-->
+        <!--Main-Section-->
+        <!--Navigator-fullscreen-->
+        <div id="navigation-content">
+            <div class="logo">
+                <img src="{% static 'images/willy wonka logo.png' %}" alt="logo">
+            </div>
+            <div class="navigation-close">
+                <span class="close-first"></span>
+                <span class="close-second"></span>
+            </div>
+            <div class="navigation-links">
+                <a href="#" data-text="HOME" id="home-link" >HOME</a>
+                <a href="{% url 'admin_panel' %}" data-text="ADMIN" id="admin-link">ADMIN</a>
+
+                <a href="#" data-text="ABOUT" id="about-link" >ABOUT</a>
+                <a href="#" data-text="BLOG" id="blog-link" >BLOG</a>
+                <a href="#" data-text="PORTFOLIO" id="portfolio-link" >PORTFOLIO</a>
+                <a href="#" data-text="CONTACT" id="contact-link" >CONTACT</a>
+            </div>
+        </div>
+        <!--Navigator-Fullscreen END-->
+          <!--Home Page-->
+        <!--Menubar-->
+        <div id="navigation-bar">
+            <img src="{% static 'images/willy wonka logo.png' %}" alt="logo">
+            <div class="menubar">
+                <span class="first-span"></span>
+                <span class="second-span"></span>
+                <span class="third-span"></span>
+            </div>
+        </div>
+        <!--Menubar End-->
+          <!--Header-->
+        <div id="header">
+            <div id="particles"></div>
+              <!--Social Media Links-->
+            <div class="social-media-links">
+                <div class="social-media-links">
+                    {% for el  in user.link_list %}
+                    
+                    
+                    <a href="{{el.linkvalue }}"><img src="{{ el.img.url }}" class="social-media" alt="{{ el.nom }}"></a>
+                    {% endfor %}
+                 </div>
+            </div>
+          
+            
+       
+            <div class="header-content">
+                <div class="header-content-box">
+                <div class="firstline"><span class="color"> {{ user.nom}} </span>{{ user.prenom }}</div>
+                <div class="secondline">
+                I'm a
+            <span class="txt-rotate color" data-period="1200"data-rotate='[ " Designer.", " Blogger.", " Freelancer." ]'></span>
+            <span class="slash">|</span>
+        </div>
+        <div class="contact">
+            <a href="Mailto:{{ user.email }}"><img src="{% static 'images/mail.png' %}" alt="email-pic" class="contactpic"></a>
+            <a href="Tel:{{ user.tel }}"><img src="{% static 'images/call.png' %}" alt="phone-pic" class="contactpic"></a>
+        </div>  
+            </div>
+            </div>
+            <!--header image-->
+            <div class="header-image">
+                <img src="{{ user.photo_profil.url }}" alt="logo" class="img-black-white">
+            </div>
+            <!--header image end-->
+        </div>
+     
+           <!--Header End-->
+        <!--HomePage End-->
+        <!--Main-Section End-->
+    
+        {% include "about.html" %}
+       {% include "portfolio.html" %}
+      {% include "blog.html" %}
+      
+      {% include "contact.html" %}
+        
+                  
+               <!--copyright-section-->
+    
+    <!--all the divisions-->
+   <!--all the divisions-->
+   <script src="{% static 'js/jquery.min.js' %}"></script>
+   <script  src="{% static 'js/particles.js' %}"></script>
+   <script src="{% static 'js/particles.min.js' %}"></script>
+   <script src="{% static 'js/index.js' %}"></script>
+   <!--particles script-->
+   <script>
+ particlesJS("particles", {"particles":{"number":{"value":40,"density":{"enable":true,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":0.5,"random":false,"anim":{"enable":false,"speed":1,"opacity_min":0.1,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":40,"size_min":0.1,"sync":false}},"line_linked":{"enable":true,"distance":150,"color":"#ffffff","opacity":0.4,"width":1},"move":{"enable":true,"speed":6,"direction":"none","random":false,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":1200}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"repulse"},"onclick":{"enable":true,"mode":"push"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":400,"size":40,"duration":2,"opacity":8,"speed":3},"repulse":{"distance":200,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});
+   </script>
+   <script>
+    function openModal(titre, resume, detailedSummary, imageSrc, additionalImages, links) {
+        document.getElementById('modal-title').innerText = titre;
+
+        document.getElementById('modal-detailed-summary').innerText = detailedSummary;
+
+        const modalImages = document.getElementById('modal-images');
+        modalImages.innerHTML = '';
+        additionalImages.forEach(src => {
+            if (src) {
+                const img = document.createElement('img');
+                img.src = src;
+                modalImages.appendChild(img);
+            }
+        });
+
+        const modalLinks = document.getElementById('modal-links');
+        modalLinks.innerHTML = '';
+        links.forEach(link => {
+            const a = document.createElement('a');
+            a.href = link.linkvalue;
+            a.innerText = '#'+link.nom;
+            a.target = "_blank";
+            modalLinks.appendChild(a);
+          
+        });
+
+        document.getElementById('detailModal').style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById('detailModal').style.display = "none";
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const storedColorClass = localStorage.getItem('portfolioColor');
+        if (storedColorClass) {
+            document.body.classList.add(storedColorClass);
+        }
+
+        document.querySelectorAll('.color-selector .colors li').forEach(colorItem => {
+            colorItem.addEventListener('click', event => {
+                const colorClass = event.target.classList[0];
+                
+                // Effacer les anciennes classes de couleur
+                document.body.className = '';
+                // Ajouter la nouvelle classe de couleur
+                document.body.classList.add(colorClass);
+
+                // Enregistrer la couleur sélectionnée dans localStorage
+                localStorage.setItem('portfolioColor', colorClass);
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Utilisateur</title>
+    <style>
+        /* Reset de base */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: #f3f3f3;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin: 20px 0;
+            color: #c70039;
+        }
+
+        .infobulle {
+            background-color: #222;
+            border-radius: 12px;
+            padding: 20px;
+            max-width: 600px;
+            margin: 20px auto;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+            color: #f3f3f3;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            background-color: #444;
+            border-color: #c70039;
+        }
+
+        button {
+            padding: 8px 18px;
+            background-color: #c70039;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #9b0030;
+        }
+
+        img {
+            max-width: 150px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1><span class="color">Profil</span> Utilisateur</h1>
+
+    <div class="infobulle">
+        <h2>Informations personnelles</h2>
+        <form method="POST" action="{% url 'edit_user_profile'  %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="nom">Nom</label>
+            <input type="text" name="nom" value="{{ user.nom }}" required>
+
+            <label for="prenom">Prénom</label>
+            <input type="text" name="prenom" value="{{ user.prenom }}" required>
+
+            <label for="pays">Pays</label>
+            <input type="text" name="pays" value="{{ user.pays }}">
+
+            <label for="ville">Ville</label>
+            <input type="text" name="ville" value="{{ user.ville }}">
+
+            <label for="tel">Téléphone</label>
+            <input type="text" name="tel" value="{{ user.tel }}">
+
+            <label for="email">Email</label>
+            <input type="email" name="email" value="{{ user.email }}" required>
+
+            <label for="sexe">Sexe</label>
+            <select name="sexe" required>
+                <option value="M" {% if user.sexe == 'M' %}selected{% endif %}>Masculin</option>
+                <option value="F" {% if user.sexe == 'F' %}selected{% endif %}>Féminin</option>
+                <option value="A" {% if user.sexe == 'A' %}selected{% endif %}>Autre</option>
+            </select>
+
+            <label for="type">Type d'utilisateur</label>
+            <select name="type" required>
+                <option value="standard" {% if user.type == 'standard' %}selected{% endif %}>Standard</option>
+                <option value="admin" {% if user.type == 'admin' %}selected{% endif %}>Administrateur</option>
+            </select>
+
+            <label for="cv">CV (PDF)</label>
+            <input type="file" name="cv" accept="application/pdf">
+
+            <label for="description">Description</label>
+            <textarea name="description">{{ user.description }}</textarea>
+
+            <label for="photo_profil">Photo de profil</label>
+            <input type="file" name="photo_profil" accept="image/*">
+            {% if user.photo_profil %}
+                <img src="{{ user.photo_profil.url }}" alt="Photo de profil">
+            {% endif %}
+
+            <button type="submit">Mettre à jour le profil</button>
+        </form>
+    </div>
+</body>
+</html>

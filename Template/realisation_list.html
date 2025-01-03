@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des realisations</title>
+    <style>
+        /* Reset de base */
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #000;
+            color: #f3f3f3;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin: 40px 0;
+            color: #c70039;
+        }
+
+        .color {
+            color: #c70039;
+        }
+
+   
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 1200px;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        a {
+            color: #f3f3f3;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 20px;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #c70039;
+        }
+
+        button {
+            padding: 8px 18px;
+            background-color: #c70039;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #9b0030;
+        }
+
+        /* Formulaires et infobulles */
+        .infobulle {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #222;
+            border-radius: 12px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            z-index: 100;
+            width: 400px;
+            max-width: 90%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+
+        .infobulle input,
+        .infobulle select,
+        .infobulle textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+            color: #f3f3f3;
+            font-size: 16px;
+        }
+
+        .infobulle input:focus,
+        .infobulle select:focus,
+        .infobulle textarea:focus {
+            background-color: #444;
+            border-color: #c70039;
+        }
+
+        /* Styles de l'input de recherche */
+        #searchInput {
+            padding: 12px;
+            margin: 20px auto;
+            display: block;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background-color: #333;
+            color: #f3f3f3;
+            font-size: 16px;
+        }
+    </style>
+    <script>
+        function showEditForm(realisationId) {
+            var form = document.getElementById('editForm' + realisationId);
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+        function showlinkForm(realisationId) {
+            var form = document.getElementById('linkForm' + realisationId);
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+
+        function showimgForm(realisationId) {
+            var form = document.getElementById('imgForm' + realisationId);
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+
+        function showDeleteForm(realisationId) {
+            var form = document.getElementById('deleteForm' + realisationId);
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+
+        function showAddRealisationform() {
+            var form = document.getElementById('addRealisationForm');
+            form.style.display = 'block';
+            form.style.opacity = 1;
+        }
+
+        function closeModal(realisationId = null) {
+            var editForm = document.getElementById('editForm' + realisationId);
+            var deleteForm = document.getElementById('deleteForm' + realisationId);
+            var imgForm = document.getElementById('imgForm' + realisationId);
+            var linkForm = document.getElementById('linkForm' + realisationId);
+            var addForm = document.getElementById('addRealisationForm');
+
+            if (editForm) editForm.style.display = 'none';
+            if (deleteForm) deleteForm.style.display = 'none';
+            if (imgForm) imgForm.style.display = 'none';
+            if (linkForm) linkForm.style.display = 'none';
+            if (addForm) addForm.style.display = 'none';
+        }
+
+        function searchrealisation() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const blogItems = document.querySelectorAll('li');
+
+            blogItems.forEach(item => {
+                const title = item.querySelector('a').textContent.toLowerCase();
+                item.style.display = title.includes(searchQuery) ? '' : 'none';
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <h1><span class="color">Liste</span> des réalisations</h1>
+
+    <button onclick="showAddRealisationform()">Ajouter une réalisation</button>
+
+    <input type="text" id="searchInput" placeholder="Rechercher une réalisation..." onkeyup="searchrealisation()">
+
+    <ul>
+        {% for Realisation in user.realisation_list %}
+            <li>
+                <div>
+                    <a href="">{{ Realisation.titre }}</a>
+                </div>
+               
+                <div>
+                    <button onclick="showEditForm({{ Realisation.pk }})">Modifier</button>
+                    <button onclick="showDeleteForm({{ Realisation.pk }})">Supprimer</button>
+                    <button onclick="showlinkForm({{ Realisation.pk }})">Ajouter un lien</button>
+                    <button onclick="showimgForm({{ Realisation.pk }})">Lier une image</button>
+                </div>
+
+                <!-- Formulaire d'édition -->
+                <div id="editForm{{ Realisation.pk }}" class="infobulle">
+                    <h2>Modifier la réalisation : {{ Realisation.titre }}</h2>
+                    <form method="POST" action="{% url 'edit_realisation' Realisation.pk %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="titre">Titre</label>
+                        <input type="text" name="titre" value="{{ Realisation.titre }}" required>
+
+                        <label for="resume">Résumé</label>
+                        <textarea name="resume" required>{{ Realisation.resume }}</textarea>
+
+                        <label for="resumed">Résumé détaillé</label>
+                        <textarea name="resumed" required>{{ Realisation.resumer_detailler }}</textarea>
+
+                        <label for="datet">Date</label>
+                        <input type="date" name="datet" value="{{ Realisation.datet|date:'Y-m-d' }}" required>
+
+                        <label for="state">État</label>
+                        <select name="state" required>
+                            <option value="E" {% if Realisation.state == 'E' %}selected{% endif %}>ENCOURS</option>
+                            <option value="P" {% if Realisation.state == 'P' %}selected{% endif %}>PASSER</option>
+                        </select>
+
+                        <label for="domaines">Domaines</label>
+                        <select name="domaines" multiple required>
+                            {% for domaine in domaines %}
+                                <option value="{{ domaine.pk }}"
+                                    {% if domaine in Realisation.domaines.all %}selected{% endif %}>
+                                    {{ domaine.nom }}
+                                </option>
+                            {% endfor %}
+                        </select>
+
+                        <label for="images">Image</label>
+                        <input type="file" name="image" accept="image/*">
+
+                        <label for="documentation">Emplacement du mémoire (PDF)</label>
+                        <input type="file" name="documentation">
+
+                        <button type="submit">Sauvegarder</button>
+                        <button type="button" onclick="closeModal({{ Realisation.pk }})">Annuler</button>
+                    </form>
+                </div>
+
+                <!-- Affichage des liens -->
+                <h3>Liens associés :</h3>
+                <ul>
+                    {% for link in Realisation.realink.all %}
+                        <li>
+                            <span>{{ link.nom }} - {{ link.linkvalue }}</span>
+                            <form method="POST" action="{% url 'delete_link' link.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">Supprimer</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Affichage des images -->
+                <h3>Images associées :</h3>
+                <ul>
+                    {% for image in Realisation.realimg.all %}
+                        <li>
+                            <span>{{ image.nom }}</span>
+                            <img src="{{ image.images.url }}" alt="{{ image.nom }}" style="width: 100px;">
+                            <form method="POST" action="{% url 'delete_image' image.pk %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit">Supprimer</button>
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Formulaire d'ajout de lien -->
+                <div id="linkForm{{ Realisation.pk }}" class="infobulle">
+                    <h2>Ajouter un lien à cette réalisation : {{ Realisation.titre }}</h2>
+                    <form method="POST" action="{% url 'link_realisation' Realisation.pk %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" required>
+
+                        <label for="linkvalue">Valeur du lien</label>
+                        <input type="text" name="linkvalue" required>
+
+                        <button type="submit">Sauvegarder</button>
+                        <button type="button" onclick="closeModal({{ Realisation.pk }})">Annuler</button>
+                    </form>
+                </div>
+
+                <!-- Formulaire d'ajout d'image -->
+                <div id="imgForm{{ Realisation.pk }}" class="infobulle">
+                    <h2>Ajouter une image à cette réalisation : {{ Realisation.titre }}</h2>
+                    <form method="POST" action="{% url 'img_realisation' Realisation.pk %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" required>
+
+                        <label for="image">Image</label>
+                        <input type="file" name="image" accept="image/*">
+
+                        <button type="submit">Sauvegarder</button>
+                        <button type="button" onclick="closeModal({{ Realisation.pk }})">Annuler</button>
+                    </form>
+                </div>
+
+                <!-- Formulaire de suppression -->
+                <div id="deleteForm{{ Realisation.pk }}" class="infobulle">
+                    <h2>Supprimer la réalisation</h2>
+                    <p>Êtes-vous sûr de vouloir supprimer cette réalisation ?</p>
+                    <form method="POST" action="{% url 'delete_realisation' Realisation.pk %}">
+                        {% csrf_token %}
+                        <button type="submit">Supprimer</button>
+                    </form>
+                    <button type="button" onclick="closeModal({{ Realisation.pk }})">Annuler</button>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Formulaire d'ajout de réalisation -->
+    <div id="addRealisationForm" class="infobulle">
+        <h2>Ajouter une nouvelle réalisation</h2>
+        <form method="POST" action="{% url 'add_realisation' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="titre">Titre</label>
+            <input type="text" name="titre" required>
+
+            <label for="resume">Résumé</label>
+            <textarea name="resume" required></textarea>
+
+            <label for="resumed">Résumé détaillé</label>
+            <textarea name="resumed" required></textarea>
+
+            <label for="datet">Date</label>
+            <input type="date" name="datet" required>
+
+            <label for="state">État</label>
+            <select name="state" required>
+                <option value="E">ENCOURS</option>
+                <option value="P">PASSER</option>
+            </select>
+
+            <label for="domaines">Domaines</label>
+            <select name="domaines" multiple required>
+                {% for domaine in domaines %}
+                    <option value="{{ domaine.pk }}">{{ domaine.nom }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="images">Image</label>
+            <input type="file" name="images" accept="image/*">
+
+            <label for="documentation">Emplacement du mémoire (PDF)</label>
+            <input type="file" name="documentation">
+
+            <button type="submit">Ajouter</button>
+            <button type="button" onclick="closeModal()">Annuler</button>
+        </form>
+    </div>
+</body>
+</html>

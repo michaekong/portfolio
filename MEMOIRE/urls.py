@@ -1,36 +1,59 @@
-"""
-URL configuration for MEMOIRE project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
 from django.urls import path
 from memoire.views import *
-from django.conf import settings 
+from django.conf import settings
 from django.conf.urls.static import static
-
+from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.urls import path, include
+app_name = 'memoire'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('home',  home,name="home"),
-    path('register', register_user,name="register"),
-    path('login',  login,name="login"),
-    path('common',  common,name="common"),
-    path('verification/', verification_page, name='verification'),
-    path('liste_memoires/', liste_memoires, name='liste_memoires')
+    # Page principale du portfolio
+    path('liste_realisations/', liste_realisations, name='liste_realisations'),
+    path('services', services, name='services'),
+    path('admins/', admin_panel, name='admin_panel'),
+    path('portfolio/', portfolio, name='portfolio'),
+    path('',login, name='login'),
+    path('login',login, name='login'),
+   path('admin/', admin.site.urls),
+   
+
+    # User Profile URLs
+     path('blogs/', blog_list, name='blog_list'),
+    path('add/', add_blog, name='add_blog'),
+    path('edit/<int:blog_id>/', edit_blog, name='edit_blog'),
+    path('delete/<int:blog_id>/', delete_blog, name='delete_blog'),
+    path('Realisations/', realisation_list, name='realisation_list'),
+    path('addrealisation/', add_realisation, name='add_realisation'),
+    path('editrealisation/<int:realisationid>/', edit_realisation, name='edit_realisation'),
+    path('deleterealisation/<int:realisationid>/', delete_realisation, name='delete_realisation'),
+     path('skills/', skills_list, name='skills_list'),
+      path('addskills/', add_skills, name='add_skills'),
+    path('editskills/<int:skillsid>/', edit_skills, name='edit_skills'),
+    path('deleteskills/<int:skillsid>/', delete_skills, name='delete_skills'),
+      path('link/', link_list, name='link_list'),
+      path('addlink/', add_link, name='add_link'),
+    path('editlink/<int:linkid>/', edit_link, name='edit_link'),
+    path('deletelink/<int:linkid>/', delete_link, name='delete_link'),
+    path('service/', service_list, name='service_list'),
+      path('addservice/', add_service, name='add_service'),
+    path('editservice/<int:serviceid>/', edit_service, name='edit_service'),
+    path('deleteservice/<int:serviceid>/', delete_service, name='delete_service'),
+    path('domaine/', domaine_list, name='domaine_list'),
+      path('adddomaine/', add_domaine, name='add_domaine'),
+      path('edit_user_profile/', edit_user_profile, name='edit_user_profile'),
+
+    path('editdomaine/<int:domaineid>/', edit_domaine, name='edit_domaine'),
+    path('deletedomaine/<int:domaineid>/', delete_domaine, name='delete_domaine'),
+    path('link_realisation/<int:realisationid>/', link_realisation, name='link_realisation'),
+    path('img_realisation/<int:realisationid>/', img_realisation, name='img_realisation'),
+     path('link/delete/<int:link_id>/', delete_link, name='delete_link'),
+    path('image/delete/<int:image_id>/', delete_image, name='delete_image'),
+
     
 ]
 
+# Serve media and static files during development
 if settings.DEBUG:
-    urlpatterns+= static (settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += staticfiles_urlpatterns()
