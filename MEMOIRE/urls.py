@@ -16,7 +16,7 @@ urlpatterns = [
     path('',login, name='login'),
     path('login',login, name='login'),
    path('admin/', admin.site.urls),
-   
+   path('portfolio/<str:username>/', portfolio_view, name='portfolio_view'),
 
     # User Profile URLs
      path('blogs/', blog_list, name='blog_list'),

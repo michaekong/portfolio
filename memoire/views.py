@@ -1,6 +1,7 @@
 
 from memoire.models import *
 from django.shortcuts import render 
+from django.conf import settings
 
 from django.db.models import Q, Count, Avg, Prefetch
 def liste_realisations(request):
@@ -55,6 +56,53 @@ def liste_realisations(request):
 def services(request):
    
     return render(request, 'js.html')
+from django.shortcuts import get_object_or_404
+
+def portfolio_view(request, username):
+    # Récupérer le profil de l'utilisateur à partir du nom d'utilisateur
+    user = get_object_or_404(UserProfile, nom=username)
+
+    # Précharger les données liées au profil utilisateur
+    userinfo = UserProfile.objects.prefetch_related(
+        Prefetch(
+            'userk',
+            queryset=Userskills.objects.select_related('userk'),
+            to_attr='skills_list'
+        ),
+        Prefetch(
+            'users',
+            queryset=Userservice.objects.select_related('users'),
+            to_attr='service_list'
+        ),
+        Prefetch(
+            'userl',
+            queryset=Userlink.objects.select_related('userl'),
+            to_attr='link_list'
+        ),
+        Prefetch(
+            'userb',
+            queryset=Blog.objects.select_related('userb'),
+            to_attr='blog_list'
+        ),
+        Prefetch(
+            'userealisation',
+            queryset=Realisation.objects.select_related('userealisation'),
+            to_attr='realisation_list'
+        )
+    ).filter(id=user.id).first()
+
+    # Récupérer tous les domaines
+    domaines = Domaine.objects.all() 
+    v=1
+
+    context = {
+        'user': userinfo,
+        'domaines': domaines,
+        'visit':v,
+    }
+
+    return render(request, 'theme-particle.html', context)
+
 def admin_panel(request):
     try:
         
@@ -94,11 +142,12 @@ def admin_panel(request):
         if user.id==el.id:
             user=el
             
-   
- 
+
+    portfolio_url = f"{settings.SITE_URL}/portfolio_view/{user.nom}"
     context = {
         
         'user':user,
+        'portfolio_url':portfolio_url
        
        
     }

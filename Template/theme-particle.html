@@ -160,9 +160,13 @@
                 <span class="close-second"></span>
             </div>
             <div class="navigation-links">
-                <a href="#" data-text="HOME" id="home-link" >HOME</a>
+                <a href="#" data-text="HOME" id="home-link" >HOME</a>{% if visit == 1 %}
+
+                {% else %}
                 <a href="{% url 'admin_panel' %}" data-text="ADMIN" id="admin-link">ADMIN</a>
 
+                {% endif %}
+      
                 <a href="#" data-text="ABOUT" id="about-link" >ABOUT</a>
                 <a href="#" data-text="BLOG" id="blog-link" >BLOG</a>
                 <a href="#" data-text="PORTFOLIO" id="portfolio-link" >PORTFOLIO</a>

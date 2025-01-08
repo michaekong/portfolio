@@ -19,4 +19,14 @@
             </tr>
         {% endfor %}
     </table>
+    <ul>
+        {% for user in users %}
+            <li>
+                <a href="{% url 'portfolio_view' user.user.username %}">
+                    Voir le portfolio de {{ user.user.username }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+    
 {% endblock %}

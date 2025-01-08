@@ -216,6 +216,17 @@
 
               
             </div>
+            <div class="card">
+                <h3>voici le lien de votre porfolio</h3>
+                <p>Manage the link</p>
+                <a href="{% url 'portfolio_view' user.nom %}">
+                    {{ portfolio_url }}
+                </a>
+
+              
+            </div>
+            
+        
 
             <!-- Section for Userlinks -->
             <div class="card">
@@ -226,6 +237,8 @@
 
               
             </div>
+           
+            
 
        
     </div>
