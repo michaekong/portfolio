@@ -207,7 +207,7 @@
         {% for Realisation in user.realisation_list %}
             <li>
                 <div>
-                    <a href="">{{ Realisation.titre }}</a>
+                    <a href="">{{ Realisation.titre }}:</a>
                 </div>
                
                 <div>
@@ -262,7 +262,7 @@
                 </div>
 
                 <!-- Affichage des liens -->
-                <h3>Liens associés :</h3>
+                <h3>Liens associés:</h3>
                 <ul>
                     {% for link in Realisation.realink.all %}
                         <li>

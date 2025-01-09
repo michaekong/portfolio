@@ -539,11 +539,11 @@ body{
     opacity: 1;
     transform: scale(1.05);
 }
-#services{
+#services {
     position: relative;
 }
 
-.services-heading{
+.services-heading {
     height: auto;
     width: 100%;
     text-align: center;
@@ -552,48 +552,47 @@ body{
     font-size: 45px;
     font-family: raleway;
     color: whitesmoke;
-    padding:10px;
+    padding: 10px;
     padding-bottom: 30px;
     padding-top: 30px;
     font-weight: 900;
+}
 
-}
-.about-first-paragraph {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction:column ;
-}
-.colors{
-    color: whitesmoke;
-}
-.services-content{
+.services-content {
     height: auto;
     width: 100%;
     overflow: hidden;
     text-align: center;
-    padding:2.5%;
+    padding: 2.5%;
+    display: flex;
+    flex-wrap: wrap; /* Permet à la section de se réorganiser sur de petits écrans */
+    justify-content: space-around;
 }
-.service{
-    height:380px;
-    width:28%;
+
+.service {
+    height: auto; /* Permet une hauteur dynamique selon le contenu */
+    width: 28%;
     margin: 1.5%;
     background-color: #191919;
-    ;
     display: inline-block;
-    box-shadow:0px 0px 25px rgb(0,0,0,.05);
+    box-shadow: 0px 0px 25px rgb(0, 0, 0, .05);
     position: relative;
     text-align: center;
     z-index: 2;
     border-radius: 10px;
     overflow: hidden;
-    animation: opacity 1.4s ease ;
+    animation: opacity 1.4s ease;
+    display: flex;
+    flex-direction: column;
+    max-height: 480px; /* Ajout de hauteur maximale pour la carte */
+    padding: 10px;
 }
-.service-img{
+
+.service-img {
     text-align: center;
 }
 
-.service-img img{
+.service-img img {
     display: inline-block;
     z-index: 2;
     position: relative;
@@ -602,32 +601,61 @@ body{
     padding: 10px;
     border: 0px solid #c70039;
     background: #c70039;
-    box-shadow:0px 0px 0px 0px #c70039 ;
-    height:100px;
+    box-shadow: 0px 0px 0px 0px #c70039;
+    height: 100px;
     transition: all .8s ease;
 }
-.service:hover .service-img img{
-    box-shadow:0px 0px 0px 400px #c70039 ;
+
+.service:hover .service-img img {
+    box-shadow: 0px 0px 0px 400px #c70039;
 }
-.service-description{
+
+.service-description {
     font-family: poppins;
-    color:whitesmoke;
+    color: whitesmoke;
     position: relative;
     display: inline-block;
-    z-index:2;
+    z-index: 2;
+    padding: 10px;
+    flex-grow: 1;
+    text-align: left;
+    overflow-y: auto; /* Permet d'activer la barre de défilement si le contenu dépasse */
+    max-height: 250px; /* Hauteur maximale définie pour la description */
+    line-height: 1.5; /* Pour améliorer la lisibilité du texte */
 }
-.service-description h2{
+
+.service-description h2 {
     padding: 10px;
     margin: 5px;
     font-weight: 200;
     font-size: 25px;
 }
-.service-description p{
+
+.service-description p {
     padding: 10px;
     font-weight: 200;
     font-size: 16px;
     opacity: .8;
+    white-space: normal; /* Permet au texte de se casser et de s'adapter */
+    word-wrap: break-word; /* Pour gérer les mots longs sans espaces */
+    max-height: 150px; /* Hauteur maximale pour éviter de tout couper */
+    overflow-y: auto; /* Permet à la description de défiler */
 }
+
+.service-description p::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.service-description p::-webkit-scrollbar-thumb {
+    background: #c70039;
+    border-radius: 10px;
+}
+
+.service-description p::-webkit-scrollbar-track {
+    background: #191919;
+}
+
 #skills{
     width: 100%;
     height:auto;

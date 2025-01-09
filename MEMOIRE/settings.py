@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+import dj_database_url
 from django.conf import settings
 from django.conf.urls.static import static
 
-
+from decouple import config
 
 from pathlib import Path
 import os 
@@ -36,8 +37,7 @@ TEMPLATES__DIR= os.path.join(BASE_DIR,"Template")
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vya5kkk$h__m!73!qhf1nn=r6+j)-^r80kban0(*7gm#y2n=zu'
-
+SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -91,10 +91,7 @@ WSGI_APPLICATION = 'MEMOIRE.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(BASE_DIR / 'db.sqlite3'),  # Assurez-vous que 'NAME' est une chaîne de caractères
-    }
+    'default': dj_database_url.parse(config('DATABASE_URL',))
 }
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

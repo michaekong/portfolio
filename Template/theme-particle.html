@@ -128,6 +128,335 @@
         .close:hover {
             color: #000;
         }
+        /* Styles responsives */
+@media (max-width: 768px) {
+    /* Cache l'image de l'utilisateur sur les écrans de téléphone */
+    .header-image {
+        display: none;
+    }
+
+    /* Ajuste la taille du texte et des marges */
+    .header-content-box {
+        padding: 20px;
+    }
+
+    .firstline {
+        font-size: 24px;
+    }
+
+    .secondline {
+        font-size: 18px;
+    }
+
+    .contact a img {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* Ajuste le menu de navigation */
+    #navigation-bar img {
+        width: 120px;
+    }
+
+    .menubar {
+        margin-right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Ajuste encore davantage pour les très petits écrans */
+    .header-content-box {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .firstline {
+        font-size: 20px;
+    }
+
+    .secondline {
+        font-size: 16px;
+    }
+
+    .contact a img {
+        width: 25px;
+        height: 25px;
+    }
+
+    #navigation-bar img {
+        width: 100px;
+    }
+}
+/* Styles de base pour les blogs */
+.blog-item {
+    padding: 20px;
+    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.blog-item h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.blog-item p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* Séparation claire entre les blogs */
+.blog-item:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+}
+
+/* Styles responsives */
+@media (max-width: 768px) {
+    .blog-item {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .blog-item h3 {
+        font-size: 20px;
+    }
+
+    .blog-item p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .blog-item {
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .blog-item h3 {
+        font-size: 18px;
+    }
+
+    .blog-item p {
+        font-size: 13px;
+    }
+}
+/* Styles pour la section Portfolio */
+
+
+.portfolio-header h1 {
+    font-size: 36px;
+    text-align: center;
+}
+
+.portfolio-header p {
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+}
+
+#portfolio-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Styles pour chaque portfolio item */
+.portfolio {
+    width: 300px;
+
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.portfolio:hover {
+    transform: translateY(-10px);
+}
+
+/* Styles pour l'image du portfolio */
+.portfolio-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.portfolio-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* Maintient les proportions sans déformation */
+    border-bottom: 2px solid #ddd;
+}
+
+/* Styles pour le texte */
+.portfolio-text {
+    padding: 15px;
+    text-align: center;
+}
+
+.portfolio-text h2 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.portfolio-text p {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Style pour le bouton */
+.portfolio-text .button {
+    margin-top: 15px;
+}
+
+.portfolio-text .button button {
+    padding: 10px 20px;
+    background-color: #c70039;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.portfolio-text .button button:hover {
+    background-color: #900028;
+}
+
+/* Styles responsives */
+@media (max-width: 768px) {
+    .portfolio {
+        width: 100%;
+    }
+    #services {
+        position: relative;
+    }
+    
+    .services-heading {
+        height: auto;
+        width: 100%;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+        font-size: 45px;
+        font-family: raleway;
+        color: whitesmoke;
+        padding: 10px;
+        padding-bottom: 30px;
+        padding-top: 30px;
+        font-weight: 900;
+    }
+    
+    .services-content {
+        height: auto;
+        width: 100%;
+        overflow: hidden;
+        text-align: center;
+        padding: 2.5%;
+        display: flex;
+        flex-wrap: wrap; /* Permet à la section de se réorganiser sur de petits écrans */
+        justify-content: space-around;
+    }
+    
+    .service {
+
+
+        display: inline-block;
+        box-shadow: 0px 0px 25px rgb(0, 0, 0, .05);
+        position: relative;
+        text-align: center;
+        z-index: 2;
+        border-radius: 10px;
+        overflow: hidden;
+        animation: opacity 1.4s ease;
+        display: flex;
+        flex-direction: column;
+        max-height: 480px; /* Ajout de hauteur maximale pour la carte */
+        padding: 10px;
+    }
+    
+    .service-img {
+        text-align: center;
+    }
+    
+    .service-img img {
+        display: inline-block;
+        z-index: 2;
+        position: relative;
+        margin: 20px;
+        border-radius: 30%;
+        padding: 10px;
+        border: 0px solid #c70039;
+        background: #c70039;
+        box-shadow: 0px 0px 0px 0px #c70039;
+        height: 100px;
+        transition: all .8s ease;
+    }
+    
+    .service:hover .service-img img {
+        box-shadow: 0px 0px 0px 400px #c70039;
+    }
+    
+    .service-description {
+        font-family: poppins;
+        color: whitesmoke;
+        position: relative;
+        display: inline-block;
+        z-index: 2;
+        padding: 10px;
+        flex-grow: 1;
+        text-align: left;
+        overflow-y: auto; /* Permet d'activer la barre de défilement si le contenu dépasse */
+        max-height: 250px; /* Hauteur maximale définie pour la description */
+        line-height: 1.5; /* Pour améliorer la lisibilité du texte */
+    }
+    
+    .service-description h2 {
+        padding: 10px;
+        margin: 5px;
+        font-weight: 200;
+        font-size: 25px;
+    }
+    
+    .service-description p {
+        padding: 10px;
+        font-weight: 200;
+        font-size: 16px;
+        opacity: .8;
+        white-space: normal; /* Permet au texte de se casser et de s'adapter */
+        word-wrap: break-word; /* Pour gérer les mots longs sans espaces */
+        max-height: 150px; /* Hauteur maximale pour éviter de tout couper */
+        overflow-y: auto; /* Permet à la description de défiler */
+    }
+    
+    .service-description p::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .service-description p::-webkit-scrollbar-thumb {
+        background: #c70039;
+        border-radius: 10px;
+    }
+    
+    .service-description p::-webkit-scrollbar-track {
+        background: #191919;
+    }
+    
+}
+
+
+
+
+
     </style>
         <!--main css file-->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.2.6/gsap.min.js"></script>
@@ -216,9 +545,12 @@
             </div>
             </div>
             <!--header image-->
-            <div class="header-image">
-                <img src="{{ user.photo_profil.url }}" alt="logo" class="img-black-white">
-            </div>
+           <!-- header image -->
+<div class="header-image">
+    <img src="{{ user.photo_profil.url }}" alt="User Image" class="img-black-white">
+</div>
+<!-- header image end -->
+
             <!--header image end-->
         </div>
      

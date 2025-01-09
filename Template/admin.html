@@ -15,76 +15,10 @@
         body {
             font-family: 'Poppins', sans-serif;
             display: flex;
+            flex-direction: column;
             background-color: #171717;
             color: #fff;
-        }
-
-        /* Sidebar styles */
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            background-color: #1a1a1a;
-            color: #fff;
             padding: 20px;
-            position: fixed;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar ul li:hover {
-            background-color: #333;
-        }
-
-        .sidebar ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 16px;
-            display: block;
-        }
-
-        .sidebar .social-media-links {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .sidebar .social-media-links a {
-            color: #fff;
-            margin: 0 10px;
-            font-size: 20px;
-            transition: color 0.3s ease;
-        }
-
-        .sidebar .social-media-links a:hover {
-            color: #c70039;
-        }
-
-        /* Content Area */
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-            flex-grow: 1;
         }
 
         h1 {
@@ -108,6 +42,10 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
             margin-bottom: 20px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            color: white;
+            text-decoration: none;
         }
 
         .admin-section .card:hover {
@@ -134,113 +72,99 @@
         }
 
         @media (max-width: 480px) {
-            .sidebar {
-                width: 200px;
-            }
-
-            .content {
-                margin-left: 200px;
-            }
-
             .admin-section .card {
                 width: 100%;
             }
         }
+
+        .copy-link {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #282828;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .copy-link input {
+            background-color: #333;
+            color: #fff;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            width: 80%;
+        }
+
+        .copy-link button {
+            background-color: #c70039;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
-    <div class="sidebar">
-        <h2>Admin Dashboard</h2>
-        <ul>
-            <li><a href="{% url 'edit_user_profile' %}">User Profiles</a></li>
-            <li><a href="{% url 'blog_list' %}">Blog Posts</a></li>
-            <li><a href="{% url 'realisation_list' %}">Realizations</a></li>
-            <li><a href="{% url 'service_list' %}">Services</a></li>
-            <li><a href="{% url 'skills_list' %}">Skills</a></li>
-            <li><a href="{% url 'link_list' %}">Links</a></li>
-           
-            <li><a href="{% url 'domaine_list' %}">Domaine</a></li>
-            
-        </ul>
 
-        <div class="social-media-links">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
+    <h1>Admin Dashboard</h1>
+
+    <div class="admin-section">
+        <!-- Card for User Profiles -->
+        <a href="{% url 'edit_user_profile' %}" class="card">
+            <h3>User Profiles</h3>
+            <p>Manage user profiles and their details.</p>
+        </a>
+
+        <!-- Card for Blog Posts -->
+        <a href="{% url 'blog_list' %}" class="card">
+            <h3>Blog Posts</h3>
+            <p>Manage blog posts and their status.</p>
+        </a>
+
+        <!-- Card for Realizations -->
+        <a href="{% url 'realisation_list' %}" class="card">
+            <h3>Realizations</h3>
+            <p>View and manage user realizations.</p>
+        </a>
+
+        <!-- Card for Services -->
+        <a href="{% url 'service_list' %}" class="card">
+            <h3>Services</h3>
+            <p>Manage services offered by users.</p>
+        </a>
+    </div>
+
+    <div class="admin-section">
+        <!-- Card for Domaines -->
+        <a href="{% url 'domaine_list' %}" class="card">
+            <h3>Domaines</h3>
+            <p>Manage domain for realizations.</p>
+        </a>
+
+        <!-- Card for Skills -->
+        <a href="{% url 'skills_list' %}" class="card">
+            <h3>Skills</h3>
+            <p>Manage the skillsets of users.</p>
+        </a>
+
+        <!-- Copy Portfolio Link -->
+        <div class="card copy-link">
+            <h3>Your Portfolio Link</h3>
+            <input type="text" value="{% url 'portfolio_view' user.nom %}" id="portfolioLink" readonly>
+            <button onclick="copyLink()">Copy</button>
         </div>
     </div>
 
-    <div class="content">
-        <h1>Admin Dashboard</h1>
-        <div class="admin-section">
-            <!-- Section for User Profile -->
-            <div class="card">
-                <h3>User Profiles</h3>
-                <p>Manage user profiles and their details.</p>
-                <a href="{% url 'edit_user_profile' %}">View All</a>
-            </div>
+    <script>
+        function copyLink() {
+            var copyText = document.getElementById("portfolioLink");
+            copyText.select();
+            document.execCommand("copy");
+            alert("Link copied to clipboard!");
+        }
+    </script>
 
-            <!-- Section for Blog -->
-            <div class="card">
-                <h3>Blog Posts</h3>
-                <p>Manage blog posts and their status.</p>
-                <a href="{% url 'blog_list' %}">View All</a>
-            </div>
-
-            <!-- Section for Realisation -->
-            <div class="card">
-                <h3>Realizations</h3>
-                <p>View and manage user realizations.</p>
-                <a href="{% url 'realisation_list' %}">View All</a>
-            </div>
-
-            <!-- Section for Userservices -->
-            <div class="card">
-                <h3>Services</h3>
-                <p>Manage services offered by users.</p>
-                <a href="{% url 'service_list' %}">View All</a>
-            </div>
-        </div>
-        
-        <div class="admin-section">
-            <!-- Section for Userskills -->
-            <div class="card">
-                <h3>Domaines</h3>
-                <p>Manage domaine for realisations.</p>
-                <a href="{% url 'domaine_list' %}">View All</a>
-            </div>
-            <div class="card">
-                <h3>Skills</h3>
-                <p>Manage the skillsets of users.</p>
-                <a href="{% url 'skills_list' %}">View All</a>
-
-              
-            </div>
-            <div class="card">
-                <h3>voici le lien de votre porfolio</h3>
-                <p>Manage the link</p>
-                <a href="{% url 'portfolio_view' user.nom %}">
-                    {{ portfolio_url }}
-                </a>
-
-              
-            </div>
-            
-        
-
-            <!-- Section for Userlinks -->
-            <div class="card">
-                <h3>Links</h3>
-                <p>Manage external links associated with users.</p>
-                <a href="{% url 'link_list' %}">View All</a>
-            </div>
-
-              
-            </div>
-           
-            
-
-       
-    </div>
 </body>
 </html>
