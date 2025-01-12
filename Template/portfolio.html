@@ -19,7 +19,7 @@
                         <p>{{ portfolio.resume }}</p>
                         <div class="button">
                             <button onclick="openModal('{{ portfolio.titre|escapejs }}', '{{ portfolio.resume|escapejs }}', '{{ portfolio.resumer_detailler|escapejs }}', '{{ portfolio.images.url|escapejs }}', [{% for img in portfolio.realimg.all %}'{{ img.images.url|escapejs }}', {% empty %} '' {% endfor %}], [{% for link in portfolio.realink.all %} {'nom': '{{ link.nom|escapejs }}', 'linkvalue': '{{ link.linkvalue|escapejs }}'}, {% empty %} '' {% endfor %}])">
-                                View Details
+                                View  Details
                             </button>
                         </div>
                     </div>

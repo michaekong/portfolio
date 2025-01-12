@@ -255,10 +255,10 @@
 
     <!-- Formulaire d'ajout de skills -->
     <div id="addskillsForm" class="infobulle">
-        <h2>Ajouter un Nouveau skills</h2>
+        <h2>Ajouter un Nouveau  skills</h2>
         <form method="POST" action="{% url 'add_skills' %}" enctype="multipart/form-data">
             {% csrf_token %}
-            <label for="nom">Nom</label>
+            <label for="nom">Nom </label>
                         <input type="text" name="nom" required>
 
                         <label for="skillsvalue">valeur en  %</label>
