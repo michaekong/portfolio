@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'memoire'
 ]
-SITE_URL = "https://memocloudproject-qi77.onrender.com"
+SITE_URL = "https://portfolio-9f3c.onrender.com"
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

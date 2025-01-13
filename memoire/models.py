@@ -55,7 +55,7 @@ from django.db import models
 class Userservice(models.Model):
     nom = models.CharField(max_length=100, unique=True)
     img = models.ImageField(upload_to='profiles/', null=True, blank=True)
-    servicevalue=models.CharField(max_length=100, unique=True)
+    servicevalue=models.TextField()
     users = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name='users')
 
     def __str__(self):
@@ -118,7 +118,7 @@ class Realisation(models.Model):
     state = models.CharField(max_length=1, choices=state_CHOICES)
 class Realisationlinks(models.Model):
     nom = models.CharField(max_length=100, unique=True)
-    linkvalue=models.CharField(max_length=100, unique=True)
+    linkvalue=models.CharField(max_length=500, unique=True)
     realink = models.ForeignKey(Realisation, on_delete=models.CASCADE, related_name='realink')
 
     def __str__(self):

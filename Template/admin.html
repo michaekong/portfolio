@@ -148,11 +148,16 @@
             <h3>Skills</h3>
             <p>Manage the skillsets of users.</p>
         </a>
+ <!-- Card for Skills -->
+ <a href="{% url 'link_list' %}" class="card">
+    <h3>links</h3>
+    <p>Manage the link of users.</p>
+</a>
 
         <!-- Copy Portfolio Link -->
         <div class="card copy-link">
             <h3>Your Portfolio Link</h3>
-            <input type="text" value="{% url 'portfolio_view' user.nom %}" id="portfolioLink" readonly>
+            <input type="text" value="{{ portfolio_url}}" id="portfolioLink" readonly>
             <button onclick="copyLink()">Copy</button>
         </div>
     </div>

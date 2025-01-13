@@ -102,7 +102,7 @@ def portfolio_view(request, username):
     }
 
     return render(request, 'theme-particle.html', context)
-
+from django.urls import reverse
 def admin_panel(request):
     try:
         
@@ -143,7 +143,7 @@ def admin_panel(request):
             user=el
             
 
-    portfolio_url = f"{settings.SITE_URL}/portfolio_view/{user.nom}"
+    portfolio_url = f"{settings.SITE_URL}{reverse('portfolio_view', args=[user.nom])}"
     context = {
         
         'user':user,

@@ -274,13 +274,17 @@
 }
 
 
-.portfolio-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;  /* Maintient les proportions sans déformation */
-    border-bottom: 2px solid #ddd;
+.portfolio-image {
+    width: 100%; /* Prend toute la largeur du conteneur */
+    height: auto; /* Ajuste la hauteur automatiquement pour conserver les proportions */
+    overflow: hidden; /* Cache toute partie de l'image qui dépasse */
 }
 
+.portfolio-image img {
+    width: 100%; /* L'image remplira toute la largeur du conteneur */
+    height: auto; /* La hauteur sera ajustée pour conserver les proportions */
+    object-fit: cover; /* Couvre le conteneur sans déformation */
+}
 /* Styles pour le texte */
 .portfolio-text {
     padding: 15px;
@@ -439,8 +443,30 @@
     }
     
 }
+.about-img {
+    width: 100%; /* Prend toute la largeur de l'élément parent */
+    height: auto; /* Ajuste la hauteur automatiquement */
+    overflow: hidden; /* Cache les débordements */
+}
 
+.about-img img {
+    width: 100%; /* L'image remplira toute la largeur de la div */
+    height: auto; /* La hauteur s'ajuste automatiquement pour conserver les proportions */
+    object-fit: contain; /* L'image sera contenue dans la div sans déformation */
+}
 
+.service-description {
+    max-height: 150px; /* Ajustez la hauteur selon vos besoins */
+    overflow-y: auto;  /* Affiche la barre de défilement si le contenu dépasse la hauteur */
+     /* Optionnel : ajoute une bordure pour délimiter la zone */
+    padding: 10px; 
+   
+    /* Optionnel : ajoute un peu de padding */
+}
+
+.scrollable {
+    margin: 0; /* Enlève la marge par défaut */
+}
 
 
 
